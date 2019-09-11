@@ -4,6 +4,8 @@ declare(strict_types=1);
 /**
  * Class ilCompetenceRecommenderInfoGUI
  *
+ * Shows the Info Screen of the Recommender
+ *
  * @ilCtrl_isCalledBy ilCompetenceRecommenderInfoGUI: ilCompetenceRecommenderGUI
  */
 class ilCompetenceRecommenderInfoGUI
@@ -14,16 +16,16 @@ class ilCompetenceRecommenderInfoGUI
 	protected $ctrl;
 
 	/**
-	 * @var ilTemplate
+	 * @var \ilTemplate
 	 */
 	protected $tpl;
 
 	/**
-	 * @var ilLanguage
+	 * @var \ilLanguage
 	 */
 	protected $lng;
 
-	/** @var  ilUIFramework */
+	/** @var  \ilUIFramework */
 	protected $ui;
 
 	/**
@@ -41,9 +43,10 @@ class ilCompetenceRecommenderInfoGUI
 	}
 
 	/**
-	 * Delegate incoming comands.
+	 * Delegate incoming commands.
 	 *
 	 * @return 	void
+	 * @throws Exception if command not known
 	 */
 	public function executeCommand()
 	{
@@ -53,6 +56,7 @@ class ilCompetenceRecommenderInfoGUI
 				$this->showInfo();
 				break;
 			default:
+				throw new Exception("ilCompetenceRecommenderInfoGUI: Unknown command: ".$cmd);
 				break;
 		}
 
@@ -60,16 +64,16 @@ class ilCompetenceRecommenderInfoGUI
 	}
 
 	/**
-	 * Displays the settings form
+	 * Displays the info text set by a language variable
 	 *
 	 * @return	void
 	 */
 	protected function showInfo()
 	{
 		$this->tpl->getStandardTemplate();
-		$this->tpl->setTitle("Meine Lernempfehlungen");
+		$this->tpl->setTitle($this->lng->txt('ui_uihk_comprec_plugin_title'));
 
-		$this->tpl->setContent("Hier erscheint Information zum Recommender");
+		$this->tpl->setContent($this->lng->txt('ui_uihk_comprec_info_text'));
 		$this->tpl->show();
 		return;
 	}
